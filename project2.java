@@ -32,6 +32,11 @@ class Course {
     }
 
     public boolean enrollStudent(Student student) {
+        // Avoid duplicate enrollment
+        if (enrolledStudents.contains(student)) {
+            System.out.println("Student is already enrolled in this course.");
+            return false;
+        }
         if (enrolledStudents.size() < maxCapacity) {
             enrolledStudents.add(student);
             return true;
@@ -78,7 +83,10 @@ class Student {
     }
 
     public void enrollInCourse(Course course) {
-        enrolledCourses.add(course);
+        // Avoid duplicate enrollment
+        if (!enrolledCourses.contains(course)) {
+            enrolledCourses.add(course);
+        }
     }
 
     public void displayStudentDetails() {
@@ -95,7 +103,7 @@ class Student {
     }
 }
 
-public class main {
+public class Main {
     private static List<Student> students = new ArrayList<>();
     private static List<Course> courses = new ArrayList<>();
     private static Scanner scanner = new Scanner(System.in);
@@ -112,7 +120,7 @@ public class main {
             System.out.println("6. Exit");
             System.out.print("Enter your choice: ");
             choice = scanner.nextInt();
-            scanner.nextLine();
+            scanner.nextLine();  // Consume newline
 
             switch (choice) {
                 case 1:
@@ -158,7 +166,7 @@ public class main {
         String name = scanner.nextLine();
         System.out.print("Enter Max Capacity: ");
         int capacity = scanner.nextInt();
-        scanner.nextLine();
+        scanner.nextLine(); // Consume newline
         Course course = new Course(id, name, capacity);
         courses.add(course);
         System.out.println("Course added successfully!");
@@ -187,7 +195,7 @@ public class main {
             student.enrollInCourse(course);
             System.out.println("Student enrolled successfully!");
         } else {
-            System.out.println("Error: Course is at full capacity.");
+            System.out.println("Error: Course is at full capacity or student already enrolled.");
         }
     }
 
